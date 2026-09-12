@@ -33,9 +33,20 @@ int main(void)
     if(valorOK) printf("O valor da construcao e: R$ %.2f \n \n", preco);
     else printf("O valor da area e negativo \n");
 
-    printf("A piscina tem uma area de: %f m2 \n", areaCalculadaPiscina(2));
-    printf("E ira custar R$ %.2f \n", valorPiscina(areaCalculadaPiscina(2), ALVENARIA));
+    double area = 50;
+    int tipo;
+    printf("Area \t Tipo \t Valor \n");
+    while(area<=200)
+    {
+        tipo = ALVENARIA;
+        while(tipo <= PLASTICO)
+        {
+            printf("%4.1f \t %8i \t R$ %9.2f \n", area, tipo, valorPiscina(area, tipo));
+            tipo++; /*tipo++ é a mesma coisa que tipo = tipo + 1 */
+        }
 
+        area += 50;/*mesma coisa que area = area + 50 */
+    }
     system("pause");
     return 0;
 }
@@ -75,19 +86,12 @@ double valor(double area)
 
 double valorPiscina(double area, int material)
 {
-    double valor = 0;
     switch (material)
     {
-    case 0: valor = 1500;
-            break;
-    case 1: valor = 1100;
-            break;
-    case 2: valor = 700;
-            break;
-    case 3: valor = 500;
-            break;                                                            
-    default:valor = -1;
-    }
-    
-    return area * valor;
+    case 0: return area * 1500;
+    case 1: return area * 1100;
+    case 2: return area * 700;
+    case 3: return area * 500;
+    default: return -1;
+    } 
 }
