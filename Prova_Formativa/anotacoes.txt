@@ -1,0 +1,18 @@
+Produto cilindrico:
+Raio da Base: 5 cm
+Altura: 20 cm
+Area*Altura
+Expessura do papelão: 0.3 cm
+
+Caixa A:
+largura: 10 cm
+Comprimento: 10 cm
+ALtura: 20 cm
+
+Caixa B:
+Largura: 12 cm
+Comprimento: 12 cm
+Altura: 22 cm
+
+
+COmprimento total da fileira: 55 cm
