@@ -35,8 +35,8 @@ int main(void)
 
     printf ("A piscina tem uma area de: %f m2 \n", areaCalculadaPiscina(2));
 
-    preco = valorPiscina(areaCalculadaPiscina(2), ALVENARIA);
-    if(preco >= 0) printf("O valor da piscina e: %f \n", preco);
+    preco = valorPiscina(areaCalculadaPiscina(6), VINIL);
+    if(preco >= 0) printf("O valor da piscina e: %.2f \n", preco);
     else printf("O valor da piscina e negativo \n");
 
     system("pause");
