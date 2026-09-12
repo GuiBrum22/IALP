@@ -75,19 +75,12 @@ double valor(double area)
 
 double valorPiscina(double area, int material)
 {
-    double valor;
     switch (material)
     {
-    case 0: valor = 1500;
-            break;
-    case 1: valor = 1100;
-            break;
-    case 2: valor = 700;
-            break;
-    case 3: valor = 500;
-            break;                                                            
-    default:valor = -1;
+    case 0: return area * 1500;
+    case 1: return area * 1100;
+    case 2: return area * 700;
+    case 3: return area * 500;
+    default: return -1;
     }
-    
-    return area * valor;
 }
