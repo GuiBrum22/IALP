@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define FALSE 0
+#define FALSE 0 
 #define TRUE  1
 
 const int ALVENARIA = 0,
