@@ -1,0 +1,113 @@
+nome[0][3] %c ------>caso for a letra
+0-linha
+3-coluna
+nome[0]  %s ---->caso for a palavra
+-------------------------------------------------------------------------------------------------------------
+float* valores = (floa*)malloc(sizeof(float*2)) -----> *2 é a quantidade de resposta ou quantidade de letras
+valores[0] = 1.2;
+valores[1] = 3.6;
+-------------------------------------------------------------------------------------------------------------
+ANOTACOES DE IALP — A PARTIR DO PROG26
+
+Este resumo reúne os assuntos encontrados nos programas da pasta Prog26 em diante, ate o ultimo material disponivel (Prog76). Os exemplos usam principalmente calculos de casa e piscina, precos por material, vetores, caracteres, strings e estruturas.
+
+1. FUNCOES, PARAMETROS E RETORNO (Prog26–34)
+
+- Uma funcao organiza uma tarefa. Seu prototipo informa o tipo retornado, o nome e os parametros antes do main:
+  double valor(double area);
+- A definicao contem o corpo da funcao; a chamada executa esse corpo:
+  preco = valor(20);
+- Parametros recebem os valores enviados na chamada. Variaveis declaradas dentro da funcao sao locais.
+- Use void quando a funcao nao precisa devolver um valor. Funcoes que calculam um resultado podem retornar, por exemplo, double.
+- return encerra a funcao e devolve o resultado. Uma funcao void pode terminar sem devolver valor.
+- O exemplo de area da casa calcula sala, quarto, banheiro e total. A funcao de area da piscina usa pi * raio^2, com M_PI e pow() de math.h.
+- O exemplo de custo da construcao multiplica a area pelo valor por metro quadrado.
+- Valores negativos sao rejeitados. Os exemplos devolvem -1 como indicador de erro; quem chama deve verificar o resultado antes de usa-lo como preco ou area.
+- FALSE e TRUE podem ser definidos como 0 e 1. typedef int bool cria o nome bool para o tipo int; isso nao cria um tipo booleano nativo em C.
+- Constantes globais e variaveis globais podem ser usadas por mais de uma funcao. Prefira parametros e constantes quando isso deixar mais claro de onde vem cada valor.
+
+2. CONDICOES E OPERADORES (Prog28–36)
+
+- if / else escolhe o trecho executado conforme uma condicao. Condicoes podem ser combinadas:
+  lateralSala >= 0 && comprimentoQuarto >= 0
+- Operadores logicos: && (E), || (OU) e ! (negacao).
+- Operadores de comparacao incluem >=, <=, >, <, == (igual) e != (diferente). Em C, = atribui; == compara.
+- Condicoes aninhadas permitem validar parametros individualmente. Para executar mais de uma instrucao sob uma condicao, use chaves.
+- O operador ternario condicao ? valor_se_verdadeiro : valor_se_falso pode representar uma escolha curta, como retornar a area do circulo ou -1 para raio invalido.
+- Para materiais, os exemplos associam identificadores a ALVENARIA, VINIL, FIBRA e PLASTICO. Use constantes nomeadas no lugar de numeros soltos, e valide se o identificador recebido esta dentro das opcoes permitidas.
+- switch / case seleciona uma alternativa. Use break ao final de cada caso para evitar que a execucao continue nos casos seguintes (fall-through). default trata valores nao previstos.
+
+3. REPETICAO E TABELAS (Prog40–46)
+
+- for e adequado quando a inicializacao, a condicao e a atualizacao do contador ficam claras:
+  for (int i = 0; i < TAMANHO; i++) { ... }
+- while verifica a condicao antes de cada repeticao; do / while executa o corpo pelo menos uma vez e verifica a condicao no final.
+- i++ incrementa em um; area += 50 equivale a area = area + 50.
+- Lacos aninhados podem combinar cada area com cada tipo de material para imprimir uma tabela de precos.
+- Confira a condicao e a atualizacao do contador para evitar repeticoes infinitas ou indices fora do vetor.
+
+4. VETORES (ARRAYS) (Prog53–64)
+
+- Um vetor armazena varios valores do mesmo tipo em posicoes consecutivas:
+  double precos[] = {1500, 1100, 750, 500};
+- O primeiro indice e 0. Para um vetor de tamanho TAMANHO, os indices validos vao de 0 a TAMANHO - 1.
+- O tamanho pode ser registrado em uma constante, por exemplo #define TAMANHO 4. Percorra com i < TAMANHO.
+- Os elementos podem ser preenchidos na declaracao ou individualmente (precos[0] = 1500;).
+- Uma soma ou media pode ser calculada acumulando os elementos em um laco. Inicialize o acumulador (por exemplo, soma = 0) antes de percorrer o vetor.
+- Vetores podem ser passados a funcoes como ponteiros para o primeiro elemento. Passe tambem o tamanho, pois a funcao nao o descobre automaticamente:
+  double media(const double valores[], int tamanho);
+- Para copiar um vetor para outro, copie cada elemento em um laco; a atribuicao arranjo2 = arranjo1 nao copia todos os elementos de arrays locais em C.
+
+5. PONTEIROS E ENDERECOS (Prog48–52)
+
+- &variavel obtem o endereco de uma variavel. Um ponteiro guarda um endereco compativel com seu tipo:
+  int variavel = 27;
+  int *endereco = &variavel;
+- *endereco acessa o valor apontado. Ler *endereco retorna o conteudo; atribuir a *endereco altera a variavel original.
+- O ponteiro tambem e uma variavel e possui seu proprio endereco (&endereco), diferente do endereco que ele guarda.
+- %p imprime um endereco; passe o ponteiro convertido para void *:
+  printf("%p\n", (void *)endereco);
+- Um ponteiro deve apontar para um objeto valido antes de ser desreferenciado. Nao leia nem escreva atraves de ponteiro nao inicializado, nulo ou ja liberado.
+
+6. ALOCACAO DINAMICA DE MEMORIA (Prog51–52, 71 e 73)
+
+- malloc solicita memoria durante a execucao. Inclua stdlib.h e calcule a quantidade em bytes usando o tamanho do tipo apontado:
+  size_t quantidade = 2;
+  float *valores = malloc(quantidade * sizeof *valores);
+- Em C nao e necessario converter (fazer cast) o retorno de malloc. Verifique se a alocacao funcionou antes de acessar a memoria (valores != NULL).
+- Depois de usar a memoria, chame free(valores) uma unica vez. Nao acesse o ponteiro depois de free; ele passa a ser invalido. Nunca use free em arrays locais nem em memoria que nao veio de uma funcao de alocacao compativel.
+- Para guardar uma string dinamica, reserve espaco para todos os caracteres e tambem para o terminador '\0'. Uma opcao e strlen(texto) + 1 bytes (com string.h); literal de string tambem pode ser copiado para o espaco alocado.
+- Para char **, a alocacao do vetor de ponteiros e a alocacao de cada texto sao separadas. Verifique cada alocacao e libere cada texto e, ao final, o vetor de ponteiros.
+
+7. CARACTERES E CODIFICACAO (Prog65–68)
+
+- char armazena um caractere entre aspas simples: 'a', '2' ou '+'. O numero 2, o caractere '2' e a string "2" sao valores diferentes.
+- %c imprime um caractere. Sequencias de escape comuns: \n (nova linha), \t (tabulacao), \' (aspas simples) e \\ (barra invertida).
+- Caracteres possuem codigos numericos; o exemplo percorre codigos imprimiveis de 32 a 126. A faixa e referente ao conjunto ASCII usado no exemplo.
+- Uma verificacao de letra minuscula pode comparar c com 'a' e 'z'. Para converter letra ASCII maiuscula, some a diferenca entre 'a' e 'A'. Se o caractere nao for maiusculo, devolva o proprio caractere; nao retorne uma variavel sem inicializacao.
+- Para codigo de producao, funcoes de <ctype.h> como islower() e tolower() podem ser preferiveis; passe EOF ou um valor representavel como unsigned char a essas funcoes.
+
+8. STRINGS E MATRIZES DE CARACTERES (Prog69–73)
+
+- Em C, string e um vetor de char terminado por '\0'. Sem esse terminador, funcoes de string podem continuar lendo memoria indevida.
+- %s imprime uma string; %c imprime apenas um caractere.
+- Uma string pode ser inicializada como literal (char nome[] = "Vinil";) ou como lista de caracteres incluindo '\0'.
+- Para uma matriz como char nomeMaterial[4][10], nomeMaterial[i] e a string da linha i; nomeMaterial[i][j] e o caractere na coluna j. O indice comeca em 0. Assim, use %s para a linha e %c para um caractere.
+- Uma string alocada dinamicamente precisa de espaco para os caracteres mais o terminador. O exemplo "Vinil" precisa de 6 chars: cinco letras e '\0'.
+- A matriz de tamanho fixo e a opcao simples quando a quantidade e o limite dos textos sao conhecidos. Para tamanhos variaveis, pode-se alocar um vetor de ponteiros e cada string separadamente, cuidando dos limites, da verificacao de malloc e da liberacao de cada alocacao.
+
+9. ESTRUTURAS (struct) (Prog76)
+
+- struct agrupa campos possivelmente de tipos diferentes sob um mesmo tipo:
+  struct casa {
+      float lateralSala;
+      float comprimentoQuarto;
+  };
+- Declare uma variavel como struct casa c1; e acesse ou altere os campos com o operador ponto: c1.lateralSala.
+- Estruturas ajudam a manter juntos os dados que representam uma mesma entidade, como as medidas de uma casa.
+
+10. BIBLIOTECAS E FORMATO DE SAIDA
+
+- stdio.h oferece printf. Os exemplos usam %i para int, %f para float/double, %c para char, %s para string e %p para endereco. Para double com precisao, por exemplo, %.2f imprime duas casas decimais.
+- stdlib.h oferece malloc e free. math.h e usado nos calculos com pow e M_PI; string.h contem funcoes como strlen; ctype.h contem funcoes para classificacao e conversao de caracteres.
+- Em printf, \t tabula e \n quebra a linha. Os marcadores de formato devem corresponder ao tipo do argumento.
