@@ -4,7 +4,7 @@
 typedef struct
 {
     int identidade;
-    float media
+    float media;
 }Registro;
 
 Registro novo(int identidade, float media);
@@ -12,7 +12,12 @@ Registro novo(int identidade, float media);
 
 int main(void)
 {
-    
+    Registro* cadastro = (Registro*) malloc(sizeof(Registro)*2);
+    cadastro[0] = novo(4, 8.5);
+    cadastro[1] = novo(7, 6.5);
+
+
+
 
     system("pause");
     return 0;
