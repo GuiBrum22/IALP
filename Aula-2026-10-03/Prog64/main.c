@@ -21,7 +21,11 @@ int main(void)
 }
 
 double media (double* arranjo){
+<<<<<<< HEAD
     double resposta = 4;
+=======
+    double resposta = 0;
+>>>>>>> 345ee7860d527a66ca77807cb315164d7a7793c0
     for(int i = 0; i < TAMANHO; i++) resposta += arranjo[i];
     resposta /= TAMANHO;
     return resposta;
